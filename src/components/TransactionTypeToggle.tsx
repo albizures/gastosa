@@ -15,7 +15,7 @@ export function TransactionTypeRadioItem(
 	return (
 		<label
 			className={clsx(
-				'relative flex h-10 w-32 items-center justify-center rounded-full text-center',
+				'relative flex h-7 w-28 items-center justify-center rounded-full text-center',
 				{
 					'bg-base-100': type === value,
 					'text-error-content': type === 'OUT' && type !== value,
@@ -57,10 +57,10 @@ export function TransactionTypeRadio(
 		>
 			<div
 				className={clsx(
-					'absolute top-2 bottom-2 h-10 w-32 rounded-full bg-base-100 transition-all duration-200',
+					'absolute top-2 bottom-2 h-7 w-28 rounded-full bg-base-100 transition-all duration-200',
 					{
 						'left-2': type === 'OUT',
-						'left-full -ml-[8.5rem]': type === 'IN',
+						'left-full -ml-[7.5rem]': type === 'IN',
 					},
 				)}
 			/>
@@ -79,37 +79,6 @@ export function TransactionTypeRadio(
 			>
 				income
 			</TransactionTypeRadioItem>
-			{/* <label
-				className={clsx(
-					'relative flex h-10 w-32 items-center justify-center rounded-full text-center capitalize',
-					{
-						'bg-base-100 shadow': type === 'OUT',
-					},
-				)}
-			>
-				<span>expenses</span>
-				<input
-					onClick={() => onChange('OUT')}
-					className="sr-only"
-					value="OUT"
-					name="transaction-type"
-					type="radio"
-				/>
-			</label> */}
-			{/* <label
-				className={clsx('relative h-10 w-32 rounded-full', {
-					'bg-base-100 shadow': type === 'IN',
-				})}
-			>
-				<span>income</span>
-				<input
-					onClick={() => onChange('IN')}
-					className="sr-only"
-					value="IN"
-					name="transaction-type"
-					type="radio"
-				/>
-			</label> */}
 		</div>
 	);
 }

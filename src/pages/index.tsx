@@ -66,13 +66,20 @@ export default function Index() {
 	];
 
 	return (
-		<div className="flex h-full flex-col justify-between">
-			<div className="flex justify-center">
-				<TransactionTypeRadio type={type} onChange={onChangeType} />
-			</div>
-			<div className="flex flex-1 items-center">
-				<div className="w-full text-center">
+		<div className="flex h-full flex-col items-center lg:flex-row">
+			<div className="flex h-full flex-1 flex-col justify-around">
+				<div className="flex flex-1 items-end justify-center">
+					<div>
+						<TransactionTypeRadio
+							type={type}
+							onChange={onChangeType}
+						/>
+					</div>
+				</div>
+				<div className="flex flex-1 items-center justify-center ">
 					<Amount amount={state} />
+				</div>
+				<div className="flex flex-1 items-start justify-center">
 					<textarea
 						name="text"
 						className="mt-3 resize-none border-0 text-center text-xl font-light text-gray-400 
@@ -82,7 +89,7 @@ export default function Index() {
 					></textarea>
 				</div>
 			</div>
-			<div>
+			<div className="flex-1">
 				<div className="flex flex-wrap gap-2">
 					{defaultTags.map((tag, index) => {
 						return (
@@ -189,15 +196,15 @@ export default function Index() {
 						/>
 					</div>
 				</div>
-				<div className="mx-auto max-w-md pt-4 text-center">
+				<div className="mx-auto max-w-md px-8 pt-4 text-center">
 					<button
 						onClick={onDone}
 						disabled={state.value === 0}
 						className={clsx(
-							'btn-primary btn-lg btn w-full max-w-xs rounded-full text-4xl ',
+							'btn-primary btn-md btn w-full max-w-xs rounded-full text-2xl ',
 						)}
 					>
-						✓
+						Add
 					</button>
 				</div>
 			</div>
@@ -258,8 +265,8 @@ function ActionButton(props: ActionButtonProps) {
 				className={clsx(
 					'rounded-full font-light active:bg-gray-100',
 					{
-						'py-4 px-6 text-4xl': size === 'default',
-						'py-4 px-6 text-2xl': size === 'small',
+						'py-3 px-5 text-4xl': size === 'default',
+						'py-3 px-5 text-2xl': size === 'small',
 					},
 					className,
 				)}
