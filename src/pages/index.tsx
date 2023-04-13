@@ -32,6 +32,7 @@ export default function Index() {
 		value: 0,
 	});
 	const mutation = api.transactions.create.useMutation();
+	const allTags = api.tags.getAll.useQuery();
 	const [tags, setTags] = React.useState<string[]>([]);
 	const [type, setType] = React.useState<TransactionType>('OUT');
 
@@ -91,7 +92,19 @@ export default function Index() {
 			</div>
 			<div className="flex-1">
 				<div className="flex flex-wrap gap-2">
-					{defaultTags.map((tag, index) => {
+					{allTags.data?.map((tag) => {
+						const { name, id } = tag;
+						return (
+							<Tag
+								active={tags.includes(id)}
+								onClick={() => setTags(toggleTag(id))}
+								key={id}
+							>
+								{name}
+							</Tag>
+						);
+					})}
+					{/* {defaultTags.map((tag, index) => {
 						return (
 							<Tag
 								active={tags.includes(tag)}
@@ -101,7 +114,7 @@ export default function Index() {
 								{tag}
 							</Tag>
 						);
-					})}
+					})} */}
 				</div>
 				<div className="grid grid-cols-4 gap-2">
 					<ActionButton
@@ -265,8 +278,8 @@ function ActionButton(props: ActionButtonProps) {
 				className={clsx(
 					'rounded-full font-light active:bg-gray-100',
 					{
-						'py-3 px-5 text-4xl': size === 'default',
-						'py-3 px-5 text-2xl': size === 'small',
+						'px-5 py-3 text-4xl': size === 'default',
+						'px-5 py-3 text-2xl': size === 'small',
 					},
 					className,
 				)}

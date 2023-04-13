@@ -17,13 +17,13 @@ const database_id = '8db1508bef6a494697c8dfe8f84b93f9';
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<GetDatabaseResponse>,
+	res: NextApiResponse<QueryDatabaseResponse>,
 ) {
 	// const response = await notion.databases.query({
 	// 	database_id,
 	// });
 
-	const response = await notion.databases.retrieve({
+	const response = await notion.databases.query({
 		database_id,
 	});
 
