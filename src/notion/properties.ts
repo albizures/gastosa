@@ -80,7 +80,9 @@ export function title(args: TitleArgs) {
 		type: 'title',
 		title: [
 			{
-				text,
+				text: {
+					content: text,
+				},
 			},
 		],
 	} as unknown as Property;
