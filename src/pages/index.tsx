@@ -58,169 +58,153 @@ export default function Index() {
 		});
 	}
 
-	const defaultTags = [
-		'Internet',
-		'Uber',
-		'Netflix',
-		'Fast Food',
-		'Gas',
-	];
-
 	return (
-		<div className="flex h-full flex-col items-center lg:flex-row">
-			<div className="flex h-full flex-1 flex-col justify-around">
-				<div className="flex flex-1 items-end justify-center">
-					<div>
-						<TransactionTypeRadio
-							type={type}
-							onChange={onChangeType}
-						/>
+		<div className="flex h-full">
+			<div className="flex h-full  flex-1 flex-col ">
+				<div className="flex flex-1 flex-col justify-around">
+					<div className="flex flex-1 items-center justify-center">
+						<div>
+							<TransactionTypeRadio
+								type={type}
+								onChange={onChangeType}
+							/>
+						</div>
 					</div>
-				</div>
-				<div className="flex flex-1 items-center justify-center ">
-					<Amount amount={state} />
-				</div>
-				<div className="flex flex-1 items-start justify-center">
-					<textarea
-						name="text"
-						className="mt-3 resize-none border-0 text-center text-xl font-light text-gray-400 
+					<div className="flex flex-1 items-center justify-center ">
+						<Amount amount={state} />
+					</div>
+					<div className="flex flex-1 items-start justify-center">
+						<textarea
+							name="text"
+							className="mt-3 resize-none border-0 text-center text-xl font-light text-gray-400 
 						focus:bg-gray-100 focus:text-black focus:outline-none"
-						wrap="soft"
-						placeholder="Your comment ..."
-					></textarea>
-				</div>
-			</div>
-			<div className="flex-1">
-				<div className="flex flex-wrap gap-2">
-					{allTags.data?.map((tag) => {
-						const { name, id } = tag;
-						return (
-							<Tag
-								active={tags.includes(id)}
-								onClick={() => setTags(toggleTag(id))}
-								key={id}
-							>
-								{name}
-							</Tag>
-						);
-					})}
-					{/* {defaultTags.map((tag, index) => {
-						return (
-							<Tag
-								active={tags.includes(tag)}
-								onClick={() => setTags(toggleTag(tag))}
-								key={index}
-							>
-								{tag}
-							</Tag>
-						);
-					})} */}
-				</div>
-				<div className="grid grid-cols-4 gap-2">
-					<ActionButton
-						onAction={onAction}
-						action={operation('+')}
-						size="small"
-						label="+"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={operation('-')}
-						size="small"
-						label="-"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={operation('*')}
-						size="small"
-						label="*"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={operation('/')}
-						size="small"
-						label="/"
-					/>
-				</div>
-				<div className="mx-auto mt-2 grid max-w-md grid-cols-3 grid-rows-4 gap-2 ">
-					<ActionButton
-						onAction={onAction}
-						action={append(7)}
-						label="7"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={append(8)}
-						label="8"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={append(9)}
-						label="9"
-					/>
-
-					<ActionButton
-						onAction={onAction}
-						action={append(4)}
-						label="4"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={append(5)}
-						label="5"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={append(6)}
-						label="6"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={append(1)}
-						label="1"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={append(2)}
-						label="2"
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={append(3)}
-						label="3"
-					/>
-
-					<ActionButton
-						onAction={onAction}
-						action={decimal}
-						label="."
-					/>
-					<ActionButton
-						onAction={onAction}
-						action={append(0)}
-						label="0"
-					/>
-					<div className="text-center">
-						<ActionButton
-							className="text-accent-focus"
-							onAction={onAction}
-							action={pop}
-							label="⌫"
-						/>
+							wrap="soft"
+							placeholder="Your comment ..."
+						></textarea>
 					</div>
 				</div>
-				<div className="mx-auto max-w-md px-8 pt-4 text-center">
-					<button
-						onClick={onDone}
-						disabled={state.value === 0}
-						className={clsx(
-							'btn-primary btn-md btn w-full max-w-xs rounded-full text-2xl ',
-						)}
-					>
-						Add
-					</button>
+				<div className="flex-1">
+					<div className="flex w-full flex-wrap justify-center gap-2">
+						{allTags.data?.map((tag) => {
+							const { name, id } = tag;
+							return (
+								<Tag
+									active={tags.includes(id)}
+									onClick={() => setTags(toggleTag(id))}
+									key={id}
+								>
+									{name}
+								</Tag>
+							);
+						})}
+					</div>
+					<div className="grid grid-cols-4 gap-2">
+						<ActionButton
+							onAction={onAction}
+							action={operation('+')}
+							size="small"
+							label="+"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={operation('-')}
+							size="small"
+							label="-"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={operation('*')}
+							size="small"
+							label="*"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={operation('/')}
+							size="small"
+							label="/"
+						/>
+					</div>
+					<div className="mx-auto mt-2 grid max-w-md grid-cols-3 grid-rows-4 gap-2 ">
+						<ActionButton
+							onAction={onAction}
+							action={append(7)}
+							label="7"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={append(8)}
+							label="8"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={append(9)}
+							label="9"
+						/>
+
+						<ActionButton
+							onAction={onAction}
+							action={append(4)}
+							label="4"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={append(5)}
+							label="5"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={append(6)}
+							label="6"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={append(1)}
+							label="1"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={append(2)}
+							label="2"
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={append(3)}
+							label="3"
+						/>
+
+						<ActionButton
+							onAction={onAction}
+							action={decimal}
+							label="."
+						/>
+						<ActionButton
+							onAction={onAction}
+							action={append(0)}
+							label="0"
+						/>
+						<div className="text-center">
+							<ActionButton
+								className="text-accent-focus"
+								onAction={onAction}
+								action={pop}
+								label="⌫"
+							/>
+						</div>
+					</div>
+					<div className="mx-auto max-w-md px-8 pt-4 text-center">
+						<button
+							onClick={onDone}
+							disabled={state.value === 0}
+							className={clsx(
+								'btn-primary btn-md btn w-full max-w-xs rounded-full text-2xl ',
+							)}
+						>
+							Add
+						</button>
+					</div>
 				</div>
 			</div>
+			<div className="hidden flex-1 shadow-inner md:block"></div>
 		</div>
 	);
 }
