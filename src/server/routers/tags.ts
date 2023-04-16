@@ -1,10 +1,6 @@
 import { z } from 'zod';
 import { propertySchemas } from '../../notion/schemas/database';
-import {
-	createTRPCRouter,
-	protectedProcedure,
-	publicProcedure,
-} from '../trpc';
+import { createTRPCRouter, protectedProcedure } from '../trpc';
 
 const database_id = '8db1508bef6a494697c8dfe8f84b93f9';
 
@@ -15,7 +11,7 @@ const databaseSchema = z.object({
 });
 
 export const tagsRouter = createTRPCRouter({
-	getAll: publicProcedure.query(async ({ ctx }) => {
+	getAll: protectedProcedure.query(async ({ ctx }) => {
 		const table = await ctx.notion.databases.retrieve({
 			database_id,
 		});
