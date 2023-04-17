@@ -1,4 +1,5 @@
 import type { Property } from './types';
+import formatISO from 'date-fns/formatISO';
 
 type OptionArgs =
 	| { id: string; name?: string }
@@ -56,8 +57,8 @@ export function date(args: DateArgs) {
 	return {
 		type: 'date',
 		date: {
-			start: start.toISOString(),
-			end: end && end.toISOString(),
+			start: formatISO(start),
+			end: end && formatISO(end),
 		},
 	} as unknown as Property;
 }
