@@ -15,7 +15,7 @@ export function TransactionTypeRadioItem(
 	return (
 		<label
 			className={clsx(
-				'relative flex h-7 w-28 items-center justify-center rounded-full text-center',
+				'relative flex h-5 w-24 items-center justify-center rounded-full text-center',
 				{
 					'bg-base-100': type === value,
 					'text-error-content': type === 'OUT' && type !== value,
@@ -23,7 +23,9 @@ export function TransactionTypeRadioItem(
 				},
 			)}
 		>
-			<span className="font-semibold uppercase">{children}</span>
+			<span className="text-sm font-semibold uppercase">
+				{children}
+			</span>
 			<input
 				onClick={() => onChange(value)}
 				className="sr-only"
@@ -48,37 +50,39 @@ export function TransactionTypeRadio(
 	return (
 		<div
 			className={clsx(
-				'relative flex rounded-full p-2 transition-all duration-200',
+				'rounded-full p-1 transition-all duration-200',
 				{
 					'bg-success': type === 'IN',
 					'bg-error': type === 'OUT',
 				},
 			)}
 		>
-			<div
-				className={clsx(
-					'absolute top-2 bottom-2 h-7 w-28 rounded-full bg-base-100 transition-all duration-200',
-					{
-						'left-2': type === 'OUT',
-						'left-full -ml-[7.5rem]': type === 'IN',
-					},
-				)}
-			/>
+			<div className="relative flex">
+				<div
+					className={clsx(
+						'absolute h-5 w-1/2 rounded-full bg-base-100 transition-all duration-200',
+						{
+							'right-1/2': type === 'OUT',
+							'right-0': type === 'IN',
+						},
+					)}
+				/>
 
-			<TransactionTypeRadioItem
-				onChange={onChange}
-				type={type}
-				value="OUT"
-			>
-				expenses
-			</TransactionTypeRadioItem>
-			<TransactionTypeRadioItem
-				onChange={onChange}
-				type={type}
-				value="IN"
-			>
-				income
-			</TransactionTypeRadioItem>
+				<TransactionTypeRadioItem
+					onChange={onChange}
+					type={type}
+					value="OUT"
+				>
+					expenses
+				</TransactionTypeRadioItem>
+				<TransactionTypeRadioItem
+					onChange={onChange}
+					type={type}
+					value="IN"
+				>
+					income
+				</TransactionTypeRadioItem>
+			</div>
 		</div>
 	);
 }

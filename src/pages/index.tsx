@@ -67,8 +67,8 @@ export default function Index() {
 	}
 
 	return (
-		<div className="flex h-full">
-			<div className="flex h-full flex-1 flex-col ">
+		<div className="flex flex-1">
+			<div className="flex flex-1 flex-col">
 				<div className="flex flex-1 flex-col justify-around">
 					<div className="flex flex-1 items-center justify-center">
 						<div>
@@ -78,7 +78,7 @@ export default function Index() {
 							/>
 						</div>
 					</div>
-					<div className="flex flex-1 items-center justify-center ">
+					<div className="flex flex-1 items-center justify-center">
 						<Amount amount={state} />
 					</div>
 					<div className="flex flex-1 items-start justify-center">
@@ -205,7 +205,7 @@ export default function Index() {
 							onClick={onDone}
 							disabled={state.value === 0}
 							className={clsx(
-								'btn-primary btn-md btn w-full max-w-xs rounded-full text-2xl ',
+								'btn-primary btn-md btn w-full max-w-xs rounded-full text-xl ',
 							)}
 						>
 							Add
@@ -227,7 +227,7 @@ function Amount(props: AmountProps) {
 	return (
 		<div className="text-center">
 			<div className="flex flex-col">
-				<span className="text-8xl font-extralight">
+				<span className="text-6xl font-extralight">
 					{amount.label === '' ? '0.0' : amount.label}
 				</span>
 				<span
@@ -271,7 +271,7 @@ function ActionButton(props: ActionButtonProps) {
 				className={clsx(
 					'rounded-full font-light active:bg-gray-100',
 					{
-						'px-5 py-3 text-4xl': size === 'default',
+						'px-4 py-1 text-3xl': size === 'default',
 						'px-5 py-3 text-2xl': size === 'small',
 					},
 					className,
