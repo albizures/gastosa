@@ -21,6 +21,8 @@ export const serverSchema = z.object({
 	),
 	TWITTER_CLIENT_ID: z.string().min(1),
 	TWITTER_CLIENT_SECRET: z.string().min(1),
+	GOOGLE_ID: z.string().min(1),
+	GOOGLE_SECRET: z.string().min(1),
 	NOTION_TOKEN: z.string().min(1),
 });
 
