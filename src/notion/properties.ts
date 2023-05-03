@@ -47,8 +47,8 @@ export function number(args: NumberArgs) {
 }
 
 interface DateArgs {
-	start: Date;
-	end?: Date;
+	start: string;
+	end?: string;
 }
 
 export function date(args: DateArgs) {
@@ -57,8 +57,8 @@ export function date(args: DateArgs) {
 	return {
 		type: 'date',
 		date: {
-			start: formatISO(start),
-			end: end && formatISO(end),
+			start,
+			end,
 		},
 	} as unknown as Property;
 }

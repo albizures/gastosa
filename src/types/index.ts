@@ -21,7 +21,7 @@ export const transactionSchema = z.object({
 	comment: z.string(),
 	amount: z.number(),
 	tags: z.array(tagSchema),
-	date: z.coerce.date(),
+	date: z.string(),
 });
 
 export const newTransactionSchema = transactionSchema

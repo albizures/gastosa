@@ -12,6 +12,7 @@ import {
 	pop,
 	type CalculatorState,
 } from '../calulator';
+import formatISO from 'date-fns/formatISO';
 
 function toggleTag(tag: string) {
 	return (current: string[]) => {
@@ -60,7 +61,7 @@ export default function Index() {
 		mutation.mutate({
 			amount: state.value,
 			type,
-			date: new Date(),
+			date: formatISO(new Date()),
 			comment: commentRef.current?.value ?? '',
 			tags,
 		});
