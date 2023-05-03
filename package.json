@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
+		"test:types": "tsc --noEmit",
 		"postinstall": "prisma generate",
 		"prisma": "prisma",
 		"db:generate": "prisma generate",
