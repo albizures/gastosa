@@ -1,5 +1,4 @@
 import type { Property } from './types';
-import formatISO from 'date-fns/formatISO';
 
 type OptionArgs =
 	| { id: string; name?: string }

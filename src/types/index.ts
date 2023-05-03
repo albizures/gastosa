@@ -21,7 +21,7 @@ export const transactionSchema = z.object({
 	comment: z.string(),
 	amount: z.number(),
 	tags: z.array(tagSchema),
-	date: z.string(),
+	date: z.coerce.date(),
 });
 
 export const newTransactionSchema = transactionSchema
@@ -29,10 +29,12 @@ export const newTransactionSchema = transactionSchema
 		id: true,
 		typeId: true,
 		tags: true,
+		date: true,
 	})
 	.merge(
 		z.object({
 			tags: z.array(z.string()),
+			date: z.string(),
 		}),
 	);
 
