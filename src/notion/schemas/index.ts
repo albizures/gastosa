@@ -35,6 +35,12 @@ export const transactionSchema = z
 					}),
 				),
 			}),
+			Currency: z.object({
+				select: z.object({
+					id: z.string(),
+					name: z.string(),
+				}),
+			}),
 		}),
 	})
 	.transform((current): Transaction => {
@@ -49,6 +55,9 @@ export const transactionSchema = z
 				Amount: { number: amount },
 				Date: {
 					date: { start: date },
+				},
+				Currency: {
+					select: { name: currency, id: currencyId },
 				},
 			},
 		} = current;
@@ -72,6 +81,7 @@ export const transactionSchema = z
 				};
 			}),
 			date,
+			currency,
 		};
 	});
 
