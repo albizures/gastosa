@@ -1,9 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client } from '@notionhq/client';
-import {
-	QueryDatabaseResponse,
-	GetDatabaseResponse,
-} from '@notionhq/client/build/src/api-endpoints';
+import { type QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints';
 
 type Data = {
 	name: string;

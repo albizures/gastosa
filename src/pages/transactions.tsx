@@ -49,13 +49,13 @@ export function TransactionList(props: TransactionListProps) {
 						<div>{comment}</div>
 						<ul>
 							{tags.map((tag) => {
-								const { id, label } = tag;
+								const { id, name } = tag;
 								return (
 									<li
 										className="inline-block rounded-lg bg-gray-300 px-1 text-sm font-semibold"
 										key={id}
 									>
-										{label}
+										{name}
 									</li>
 								);
 							})}
