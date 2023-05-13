@@ -1,16 +1,16 @@
 import { z } from 'zod';
+import { optionArgsSchema } from '../notion/properties';
 
 export const transactionTypeSchema = z.union([
 	z.literal('IN'),
 	z.literal('OUT'),
+	z.literal('LENT'),
+	z.literal('BORROW'),
 ]);
 
 export type TransactionType = z.infer<typeof transactionTypeSchema>;
 
-const tagSchema = z.object({
-	id: z.string(),
-	label: z.string(),
-});
+const tagSchema = optionArgsSchema;
 
 export type Tag = z.infer<typeof tagSchema>;
 
@@ -22,18 +22,17 @@ export const transactionSchema = z.object({
 	amount: z.number(),
 	tags: z.array(tagSchema),
 	date: z.coerce.date(),
+	currency: z.string(),
 });
 
 export const newTransactionSchema = transactionSchema
 	.omit({
 		id: true,
 		typeId: true,
-		tags: true,
 		date: true,
 	})
 	.merge(
 		z.object({
-			tags: z.array(z.string()),
 			date: z.string(),
 		}),
 	);

@@ -3,18 +3,18 @@ export interface CalculatorState {
 	value: number;
 }
 
-export type Operations = '+' | '-' | '/' | '*';
+export type Operation = '+' | '-' | '/' | '*';
 
 const operations = `+-/*`;
 
 export type Action = (state: CalculatorState) => CalculatorState;
 
-export function isOperation(char?: string): char is Operations {
+export function isOperation(char?: string): char is Operation {
 	return Boolean(char && operations.includes(char));
 }
 
 export function pop(state: CalculatorState) {
-	const label = propStr(state.label);
+	const label = popStr(state.label);
 
 	return {
 		label,
@@ -22,7 +22,7 @@ export function pop(state: CalculatorState) {
 	};
 }
 
-export function propStr(value: string) {
+export function popStr(value: string) {
 	return value.slice(0, value.length - 1);
 }
 
@@ -66,11 +66,14 @@ export function decimal(state: CalculatorState) {
 	};
 }
 
-export function operation(operation: Operations) {
+export function operation(operation: '+/−' | '×/÷') {
 	return (state: CalculatorState) => {
 		const lastChar = state.label.at(-1);
-		if (state.label.trim() === '' && operation !== '-') {
-			return state;
+		if (state.label.trim() === '' && operation === '+/−') {
+			return {
+				...state,
+				label: '-',
+			};
 		}
 
 		if (state.label.length === 1 && state.label === '-') {
@@ -79,11 +82,23 @@ export function operation(operation: Operations) {
 
 		let label = state.label;
 		if (isOperation(lastChar)) {
-			if (lastChar !== operation) {
-				label = `${propStr(state.label)}${operation}`;
+			if (operation === '+/−') {
+				if (lastChar === '+') {
+					label = `${popStr(state.label)}-`;
+				} else {
+					label = `${popStr(state.label)}+`;
+				}
+			} else if (operation === '×/÷') {
+				if (lastChar === '*') {
+					label = `${popStr(state.label)}/`;
+				} else {
+					label = `${popStr(state.label)}*`;
+				}
 			}
-		} else {
-			label = `${state.label}${operation}`;
+		} else if (operation === '+/−') {
+			label = `${state.label}+`;
+		} else if (operation === '×/÷') {
+			label = `${state.label}*`;
 		}
 
 		return {

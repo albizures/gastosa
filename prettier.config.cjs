@@ -3,6 +3,6 @@ const config = require('@albizures/prettier-config');
 
 /** @type {import("prettier").Config} */
 module.exports = {
-	plugins: [require.resolve('prettier-plugin-tailwindcss')],
+	// plugins: [require.resolve('prettier-plugin-tailwindcss')],
 	...config,
 };

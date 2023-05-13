@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { type UseFormRegisterReturn } from 'react-hook-form';
 
 interface TagProps {
 	children: React.ReactNode;
@@ -12,10 +13,35 @@ export function Tag(props: TagProps) {
 		<button
 			onClick={onClick}
 			className={clsx('badge-primary badge badge-lg text-lg', {
-				'badge-outline': !active,
+				'bg-opacity-5': !active,
 			})}
 		>
 			{children}
 		</button>
+	);
+}
+
+interface TagFieldProps {
+	children: React.ReactNode;
+	input: UseFormRegisterReturn<'tags' | 'newTags'>;
+	value: string;
+	defaultChecked?: boolean;
+}
+
+export function TagField(props: TagFieldProps) {
+	const { children, input, value, defaultChecked } = props;
+	return (
+		<label>
+			<input
+				{...input}
+				defaultChecked={defaultChecked}
+				value={value}
+				type="checkbox"
+				className="peer sr-only"
+			/>
+			<span className="badge-primary badge badge-lg bg-opacity-5 text-lg peer-checked:bg-opacity-100">
+				{children}
+			</span>
+		</label>
 	);
 }

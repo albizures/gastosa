@@ -23,7 +23,7 @@ export const transactionsRouter = createTRPCRouter({
 		.mutation(async ({ input, ctx }) => {
 			const { notion } = ctx;
 
-			const { tags, type, amount, date, comment } = input;
+			const { tags, type, amount, date, comment, currency } = input;
 
 			await notion.pages.create(
 				createPageParams({
@@ -31,13 +31,14 @@ export const transactionsRouter = createTRPCRouter({
 					properties: {
 						Type: p.select({ name: type }),
 						Tags: p.multiSelect({
-							options: tags.map((name) => {
-								return { name };
+							options: tags.map((tag) => {
+								return tag;
 							}),
 						}),
 						Amount: p.number({ number: amount }),
 						Date: p.date({ start: date }),
 						Comment: p.title({ text: comment }),
+						Currency: p.select({ name: currency }),
 					},
 				}),
 			);

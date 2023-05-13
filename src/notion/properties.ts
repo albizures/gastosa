@@ -1,10 +1,20 @@
+import { z } from 'zod';
 import type { Property } from './types';
 
-type OptionArgs =
-	| { id: string; name?: string }
-	| { id?: string; name: string };
+export const optionArgsSchema = z.union([
+	z.object({
+		id: z.string().nullish().optional(),
+		name: z.string(),
+	}),
+	z.object({
+		id: z.string(),
+		name: z.string().nullish().optional(),
+	}),
+]);
 
-type SelectArgs = OptionArgs;
+export type OptionArgs = z.infer<typeof optionArgsSchema>;
+
+export type SelectArgs = OptionArgs;
 
 type Select = Property &
 	({ id: string; name?: string } | { id?: string; name: string });

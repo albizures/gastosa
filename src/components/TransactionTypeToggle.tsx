@@ -1,25 +1,24 @@
 import clsx from 'clsx';
 import type { TransactionType } from '../types';
+import { type UseFormRegisterReturn } from 'react-hook-form';
 
 interface TransactionTypeRadioItemProps {
 	children: React.ReactNode;
 	value: TransactionType;
 	type: TransactionType;
-	onChange: (value: TransactionType) => void;
+	input: UseFormRegisterReturn<'type'>;
 }
 
 export function TransactionTypeRadioItem(
 	props: TransactionTypeRadioItemProps,
 ) {
-	const { children, onChange, value, type } = props;
+	const { children, value, type, input } = props;
 	return (
 		<label
 			className={clsx(
 				'relative flex h-5 w-24 items-center justify-center rounded-full text-center',
 				{
 					'bg-base-100': type === value,
-					'text-error-content': type === 'OUT' && type !== value,
-					'text-success-content': type === 'IN' && type !== value,
 				},
 			)}
 		>
@@ -27,10 +26,9 @@ export function TransactionTypeRadioItem(
 				{children}
 			</span>
 			<input
-				onClick={() => onChange(value)}
-				className="sr-only"
+				{...input}
 				value={value}
-				name="transaction-type"
+				className="sr-only"
 				type="radio"
 			/>
 		</label>
@@ -38,22 +36,23 @@ export function TransactionTypeRadioItem(
 }
 
 interface TransactionTypeRadioProps {
-	onChange: (type: TransactionType) => void;
 	type: TransactionType;
+	isLoan: boolean;
+	input: UseFormRegisterReturn<'type'>;
 }
 
 export function TransactionTypeRadio(
 	props: TransactionTypeRadioProps,
 ) {
-	const { onChange, type } = props;
+	const { type, input, isLoan } = props;
 
 	return (
 		<div
 			className={clsx(
 				'rounded-full p-1 transition-all duration-200',
 				{
-					'bg-success': type === 'IN',
-					'bg-error': type === 'OUT',
+					'bg-success': type === 'IN' || type === 'LENT',
+					'bg-error': type === 'OUT' || type === 'BORROW',
 				},
 			)}
 		>
@@ -62,27 +61,83 @@ export function TransactionTypeRadio(
 					className={clsx(
 						'absolute h-5 w-1/2 rounded-full bg-base-100 transition-all duration-200',
 						{
-							'right-1/2': type === 'OUT',
-							'right-0': type === 'IN',
+							'right-1/2': type === 'OUT' || type === 'BORROW',
+							'right-0': type === 'IN' || type === 'LENT',
 						},
 					)}
 				/>
-
-				<TransactionTypeRadioItem
-					onChange={onChange}
-					type={type}
-					value="OUT"
-				>
-					expenses
-				</TransactionTypeRadioItem>
-				<TransactionTypeRadioItem
-					onChange={onChange}
-					type={type}
-					value="IN"
-				>
-					income
-				</TransactionTypeRadioItem>
+				{isLoan ? (
+					<>
+						<TransactionTypeRadioItem
+							input={input}
+							type={type}
+							value="BORROW"
+						>
+							BORROW
+						</TransactionTypeRadioItem>
+						<TransactionTypeRadioItem
+							input={input}
+							type={type}
+							value="LENT"
+						>
+							LENT
+						</TransactionTypeRadioItem>
+					</>
+				) : (
+					<>
+						<TransactionTypeRadioItem
+							input={input}
+							type={type}
+							value="OUT"
+						>
+							expenses
+						</TransactionTypeRadioItem>
+						<TransactionTypeRadioItem
+							input={input}
+							type={type}
+							value="IN"
+						>
+							income
+						</TransactionTypeRadioItem>
+					</>
+				)}
 			</div>
+		</div>
+	);
+}
+
+interface TransactionTypeSectionProps {
+	isLoan: boolean;
+	type: TransactionType;
+	isLoanInput: UseFormRegisterReturn<'isLoan'>;
+	typeInput: UseFormRegisterReturn<'type'>;
+}
+
+export function TransactionTypeSection(
+	props: TransactionTypeSectionProps,
+) {
+	const { isLoan, type, isLoanInput, typeInput } = props;
+	return (
+		<div
+			className={clsx('flex items-center rounded-full', {
+				'bg-base-300': !isLoan,
+				'bg-accent': isLoan,
+			})}
+		>
+			<TransactionTypeRadio
+				isLoan={isLoan}
+				input={typeInput}
+				type={type}
+			/>
+
+			<label className="ml-2 mr-1 flex items-center text-sm font-semibold uppercase">
+				loan
+				<input
+					{...isLoanInput}
+					type="checkbox"
+					className="checkbox checkbox-sm ml-1"
+				/>
+			</label>
 		</div>
 	);
 }
