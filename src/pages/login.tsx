@@ -1,14 +1,17 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import React from 'react';
 
 export default function Login() {
 	const router = useRouter();
 	const { data: sessionData } = useSession();
 
-	if (sessionData) {
-		void router.push('/');
-	}
+	React.useEffect(() => {
+		if (sessionData) {
+			void router.push('/');
+		}
+	}, [sessionData, router]);
 
 	return (
 		<>
