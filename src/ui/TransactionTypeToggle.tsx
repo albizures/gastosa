@@ -7,18 +7,20 @@ interface TransactionTypeRadioItemProps {
 	value: TransactionType;
 	type: TransactionType;
 	input: UseFormRegisterReturn<'type'>;
+	isShown?: boolean;
 }
 
 export function TransactionTypeRadioItem(
 	props: TransactionTypeRadioItemProps,
 ) {
-	const { children, value, type, input } = props;
+	const { children, value, type, input, isShown } = props;
 	return (
 		<label
 			className={clsx(
 				'relative flex h-5 w-24 items-center justify-center rounded-full text-center',
 				{
 					'bg-base-100': type === value,
+					hidden: !isShown,
 				},
 			)}
 		>
@@ -66,41 +68,40 @@ export function TransactionTypeRadio(
 						},
 					)}
 				/>
-				{isLoan ? (
-					<>
-						<TransactionTypeRadioItem
-							input={input}
-							type={type}
-							value="BORROW"
-						>
-							BORROW
-						</TransactionTypeRadioItem>
-						<TransactionTypeRadioItem
-							input={input}
-							type={type}
-							value="LENT"
-						>
-							LENT
-						</TransactionTypeRadioItem>
-					</>
-				) : (
-					<>
-						<TransactionTypeRadioItem
-							input={input}
-							type={type}
-							value="OUT"
-						>
-							expenses
-						</TransactionTypeRadioItem>
-						<TransactionTypeRadioItem
-							input={input}
-							type={type}
-							value="IN"
-						>
-							income
-						</TransactionTypeRadioItem>
-					</>
-				)}
+
+				<TransactionTypeRadioItem
+					input={input}
+					type={type}
+					value="BORROW"
+					isShown={isLoan}
+				>
+					BORROW
+				</TransactionTypeRadioItem>
+				<TransactionTypeRadioItem
+					input={input}
+					type={type}
+					value="LENT"
+					isShown={isLoan}
+				>
+					LENT
+				</TransactionTypeRadioItem>
+
+				<TransactionTypeRadioItem
+					input={input}
+					type={type}
+					value="OUT"
+					isShown={!isLoan}
+				>
+					expenses
+				</TransactionTypeRadioItem>
+				<TransactionTypeRadioItem
+					input={input}
+					type={type}
+					value="IN"
+					isShown={!isLoan}
+				>
+					income
+				</TransactionTypeRadioItem>
 			</div>
 		</div>
 	);

@@ -77,19 +77,24 @@ export default function Index() {
 	const isLoan = watch('isLoan');
 	const type = watch('type');
 
-	React.useEffect(() => {
+	function onIsLoanChange(
+		event: React.ChangeEvent<HTMLInputElement>,
+	) {
 		const { type } = getValues();
-
-		if (type === 'BORROW') {
-			setValue('type', 'OUT');
-		} else if (type === 'LENT') {
-			setValue('type', 'IN');
-		} else if (type === 'IN') {
-			setValue('type', 'LENT');
-		} else if (type === 'OUT') {
-			setValue('type', 'BORROW');
+		if (event.target.checked) {
+			if (type === 'IN') {
+				setValue('type', 'LENT');
+			} else if (type === 'OUT') {
+				setValue('type', 'BORROW');
+			}
+		} else {
+			if (type === 'BORROW') {
+				setValue('type', 'OUT');
+			} else if (type === 'LENT') {
+				setValue('type', 'IN');
+			}
 		}
-	}, [isLoan, setValue, getValues]);
+	}
 
 	return (
 		<form
@@ -113,7 +118,9 @@ export default function Index() {
 					isLoan={isLoan}
 					type={type}
 					typeInput={register('type')}
-					isLoanInput={register('isLoan')}
+					isLoanInput={register('isLoan', {
+						onChange: onIsLoanChange,
+					})}
 				/>
 			</div>
 			<TagList
@@ -123,7 +130,7 @@ export default function Index() {
 			<GridCalculator
 				currencyInput={register('currency')}
 				setState={setState}
-				isValid={isValid}
+				isValid={isValid && state.value !== 0}
 			/>
 		</form>
 	);

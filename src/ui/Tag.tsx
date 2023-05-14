@@ -12,9 +12,12 @@ export function Tag(props: TagProps) {
 	return (
 		<button
 			onClick={onClick}
-			className={clsx('badge-primary badge badge-lg text-lg', {
-				'bg-opacity-5': !active,
-			})}
+			className={clsx(
+				'badge-primary badge whitespace-nowrap badge-lg text-lg',
+				{
+					'bg-opacity-5': !active,
+				},
+			)}
 		>
 			{children}
 		</button>
@@ -39,7 +42,7 @@ export function TagField(props: TagFieldProps) {
 				type="checkbox"
 				className="peer sr-only"
 			/>
-			<span className="badge-primary badge badge-lg bg-opacity-5 text-lg peer-checked:bg-opacity-100">
+			<span className="badge-primary whitespace-nowrap badge badge-lg bg-opacity-5 text-lg peer-checked:bg-opacity-100">
 				{children}
 			</span>
 		</label>

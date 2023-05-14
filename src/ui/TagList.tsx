@@ -39,7 +39,6 @@ export function TagList(props: TagListProps) {
 	}
 
 	const tags = allTags.data ?? [];
-	const shownTags = isModal ? tags : tags.slice(0, 5);
 
 	return (
 		<div
@@ -115,7 +114,7 @@ export function TagList(props: TagListProps) {
 							</TagField>
 						);
 					})}
-					{shownTags.map((tag) => {
+					{tags.map((tag) => {
 						const { name, id } = tag;
 						return (
 							<TagField input={input} value={id} key={id}>
