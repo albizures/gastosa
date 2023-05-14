@@ -7,7 +7,7 @@ export default function Login() {
 	const { data: sessionData } = useSession();
 
 	if (sessionData) {
-		void router.push('');
+		void router.push('/');
 	}
 
 	return (

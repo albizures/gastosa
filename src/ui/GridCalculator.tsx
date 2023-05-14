@@ -1,4 +1,5 @@
 import { CheckIcon } from 'lucide-react';
+import { type UseFormRegisterReturn } from 'react-hook-form';
 import {
 	type Action,
 	type CalculatorState,
@@ -11,10 +12,11 @@ import {
 interface GridCalculatorProps {
 	setState: React.Dispatch<React.SetStateAction<CalculatorState>>;
 	isValid: boolean;
+	currencyInput: UseFormRegisterReturn<'currency'>;
 }
 
 export function GridCalculator(props: GridCalculatorProps) {
-	const { setState, isValid } = props;
+	const { setState, isValid, currencyInput } = props;
 
 	function onAction(action: Action) {
 		setState(action);
@@ -86,7 +88,13 @@ export function GridCalculator(props: GridCalculatorProps) {
 				label="×/÷"
 			/>
 
-			<ActionButton onAction={onAction} action={decimal} label="." />
+			<select
+				className="text-center px-2 text-2xl font-light appearance-none"
+				{...currencyInput}
+			>
+				<option value="GTQ">GTQ</option>
+				<option value="USD">USD</option>
+			</select>
 
 			<ActionButton
 				onAction={onAction}

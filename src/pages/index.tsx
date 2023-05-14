@@ -1,17 +1,17 @@
 import { LogInIcon, CheckIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import React from 'react';
-import clsx from 'clsx';
 import formatISO from 'date-fns/formatISO';
-import { TransactionTypeSection } from '../components/TransactionTypeToggle';
+import { TransactionTypeSection } from '../ui/TransactionTypeToggle';
 import type { TransactionType } from '../types';
 import { api } from '../utils/api';
 
-import { TagList } from '../components/TagList';
-import { GridCalculator } from '../components/GridCalculator';
+import { TagList } from '../ui/TagList';
+import { GridCalculator } from '../ui/GridCalculator';
 import { type CalculatorState } from '../calulator';
-import { Amount } from '../components/Amount';
+import { Amount } from '../ui/Amount';
 import { type OptionArgs } from '../notion/properties';
+import { useRequireSession } from '../ui/useRequireSession';
 
 interface NewTransaction {
 	type: TransactionType;
@@ -19,6 +19,7 @@ interface NewTransaction {
 	isLoan: boolean;
 	tags: string[];
 	newTags: string[];
+	currency: string;
 }
 
 export default function Index() {
@@ -36,8 +37,11 @@ export default function Index() {
 			tags: [],
 			newTags: [],
 			isLoan: false,
+			currency: 'GTQ',
 		},
 	});
+
+	useRequireSession();
 
 	const [state, setState] = React.useState<CalculatorState>({
 		label: '',
@@ -56,14 +60,14 @@ export default function Index() {
 
 	function onSubmit(data: NewTransaction) {
 		console.log('data', data);
-		const { tags, newTags, type, comment = '' } = data;
+		const { tags, newTags, type, comment = '', currency } = data;
 
 		mutation.mutate({
 			amount: state.value,
 			type,
 			date: formatISO(new Date()),
 			comment: comment ?? '',
-			currency: 'GTQ',
+			currency,
 			tags: tags
 				.map<OptionArgs>((id) => ({ id }))
 				.concat(newTags.map((name) => ({ name }))),
@@ -116,7 +120,11 @@ export default function Index() {
 				newTagsinput={register('newTags')}
 				input={register('tags')}
 			/>
-			<GridCalculator setState={setState} isValid={isValid} />
+			<GridCalculator
+				currencyInput={register('currency')}
+				setState={setState}
+				isValid={isValid}
+			/>
 		</form>
 	);
 }
